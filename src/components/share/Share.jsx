@@ -37,9 +37,11 @@ export default function Share({user,contract, account, provider,seeallpost,setju
             url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
             data: formData,
             headers: {
-              pinata_api_key: `1a6eebac74dc1928e70f`,
+              pinata_api_key: `6cb01ab7b5f69a92e549`,
               pinata_secret_api_key: `
-              ec8173f8000f1a51f1f87a08fc7db3c22c8f239f0163c74163e4d2ffad2fd08b`,
+              29114419b3e891ba936c43725eabc6d41fc678ef42da8e6fc2b5563c80a1325c
+
+`,
               "Content-Type": "multipart/form-data",
             },
             onUploadProgress: (data) => {

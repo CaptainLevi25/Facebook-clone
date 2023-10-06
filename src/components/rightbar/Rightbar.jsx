@@ -2,7 +2,7 @@ import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoo from "./facebook logo i 0.png";
 
 
@@ -53,17 +53,54 @@ export default function Rightbar({
   //   return () => clearInterval(interval);
   // }, []);
 
-  const HomeRightbar = ({j}) => {
+  const HomeRightbar = ({j,contract}) => {
+
+    const [ads,setads] = useState(null);
+
+    useEffect(()=>{
+      contract && showads();
+    },[contract])
+    const showads = async()=>{
+    try{
+      const ads  =  await contract.showAds();
+      console.log(ads);
+      setads(ads);
+    }
+      catch{
+        console.log("errore fro show ads")
+      }
+    }
+
     return (
       <>
         <div className="birthdayContainer">
           <img className="birthdayImg" src="assets/gift.png" alt="" />
           <span className="birthdayText">
+          
+              
             {/* <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today. */}
           </span>
+          <br />
+          <h2>Our Sponsors</h2>
+         <h3> <Link to="/ads"> Post Your ad</Link></h3>
         </div>
-        <img className="rightbarAd" src={logoo} alt="" />
+
+        {
+
+          ads ? ads.map((item)=>{
+           return (<> <img className="rightbarAd" src={item.imageForAd} alt="" />
+                      <h3>{item.companyName}</h3>
+                      <hr />
+                    </>
+           )
+          })
+          
+       : <img className="rightbarAd" src={logoo} alt="" />
+
+        }
         <h4 className="rightbarTitle">My Friends</h4>
+
+
         {/* <button
           onClick={() => {
            finduser();
@@ -199,7 +236,7 @@ export default function Rightbar({
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {profile ? <ProfileRightbar sendreq={sendreq} ans={ans} user = {user} profiledata = {profiledata} contract={contract} otherfrnd={otherfrnd} already={already}/> : <HomeRightbar j={j}/>}
+        {profile ? <ProfileRightbar sendreq={sendreq} ans={ans} user = {user} profiledata = {profiledata} contract={contract} otherfrnd={otherfrnd} already={already}/> : <HomeRightbar j={j} contract={contract}/>}
       </div>
     </div>
   );
